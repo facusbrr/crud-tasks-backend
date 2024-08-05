@@ -6,11 +6,7 @@ const PORT = 3000;
 //MIDDLEWARE
 app.use(express.json());
 
-// GET
+//ROUTES
+app.use(require('./routes/tasks.routes'));
 
-// POST
-
-// PUT
-
-// DELETE
 app.listen(PORT, () => console.log(`Server funcionando en el puerto: http://localhost:${PORT}`))
