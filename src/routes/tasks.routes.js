@@ -1,10 +1,10 @@
-const {obtenerTasks, createTasks, editTask} = require('../controllers/tasks.controllers');
+const {obtenerTasks, createTasks, editTask, obtenerTask} = require('../controllers/tasks.controllers');
 const router = require('express').Router();
 
 // Todas las tareas
 router.get('/tasks', obtenerTasks);
 // Mostrar por id las tareas
-router.get('/tasks/:id', )
+router.get('/tasks/:id', obtenerTask)
 // Crear una nueva tarea
 router.post('/tasks', createTasks);
 // Actualizar una tarea por id

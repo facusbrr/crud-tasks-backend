@@ -1,4 +1,5 @@
 const { connectDB } = require('../databases/task_db'); 
+const { connect } = require('../routes/tasks.routes');
 const ctrl = {};
 
 // Obtener todas las tareas
@@ -6,6 +7,20 @@ ctrl.obtenerTasks = async(req, res) =>{
     const connection = await connectDB();
     const [results] = await connection.query('SELECT * FROM tasks');
     connection.end();
+    return res.json(results);
+}
+// Obtener una tarea mediante su id
+ctrl.obtenerTask = async(req, res) =>{
+    const id = parseInt(req.params.id);
+    if(!id){
+        res.status(404).send({message:'El id tiene que ser un numero'})
+    }
+    const connection = await connectDB();
+    const [results] = await connection.query('SELECT * FROM tasks WHERE id = ?', id);
+    connection.end();
+    if(results.length === 0){
+        res.status(404).send({message: 'Tarea no encontrada'})
+    }
     return res.json(results);
 }
 // Crear una nueva tarea
