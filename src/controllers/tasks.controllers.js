@@ -25,7 +25,7 @@ ctrl.obtenerTask = async(req, res) =>{
 }
 // Crear una nueva tarea
 // Tienen controles como max caracteres 255 y que no puede estar vacío
-ctrl.createTasks = async (req, res) => {
+ctrl.createTasks = async(req, res) => {
     const { title, description, isComplete } = req.body;
     if (!title.trim() || !description.trim()) {
         return res.status(400).json({ message: 'Hay datos que estan vacíos' });
@@ -41,8 +41,8 @@ ctrl.createTasks = async (req, res) => {
     }
 }
 // Editar tareas por id
-ctrl.editTask = async (req, res) => {
-    const { id } = req.params;
+ctrl.editTask = async(req, res) => {
+    const id = parseInt(req.params.id);
     const { title, description, isComplete } = req.body;
 
     if (!title.trim() || !description.trim()) {
@@ -51,6 +51,8 @@ ctrl.editTask = async (req, res) => {
         return res.status(400).json({ message: 'El título solo debe tener 255 caracteres.' });
     }else if(isComplete !== 0 && isComplete !== 1){
         return res.status(400).json({ message: 'isComplete Debe ser 0 o 1'})
+    }else if(!id){
+        res.status(400).send({message:'El id tiene que ser un numero'})
     }else{
         const connection = await connectDB();
         connection.query('UPDATE tasks SET title = ?, description = ?, isComplete = ? WHERE id = ?', [title, description, isComplete, id]);
@@ -58,9 +60,20 @@ ctrl.editTask = async (req, res) => {
         res.status(200).send({message: 'Tarea editada'})
     }
 }
-
-// Actualizar 
-
 // Eliminar
+ctrl.deleteTask = async(req, res) => {
+    const id = parseInt(req.params.id);
+    if(!id){
+        res.status(400).send({message:'El id tiene que ser un numero'})
+    }
+    const connection = await connectDB();
+    const [results] = await connection.query('SELECT * FROM tasks WHERE id = ?', id);
+    if (results.length === 0){
+        res.status(404).send({message: 'Tarea no encontrada'})
+    }
 
+    const [deleteResult] = await connection.query('DELETE FROM tasks WHERE id = ?', id);
+    connection.end;
+    res.status(200).send({message: 'Tarea eliminada'})
+}
 module.exports = ctrl;

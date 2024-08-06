@@ -1,4 +1,4 @@
-const {obtenerTasks, createTasks, editTask, obtenerTask} = require('../controllers/tasks.controllers');
+const {obtenerTasks, createTasks, editTask, obtenerTask, deleteTask} = require('../controllers/tasks.controllers');
 const router = require('express').Router();
 
 // Todas las tareas
@@ -10,6 +10,6 @@ router.post('/tasks', createTasks);
 // Actualizar una tarea por id
 router.put('/tasks/:id', editTask);
 // Eliminar una tarea por id
-router.delete('tasks/:id',);
+router.delete('/tasks/:id', deleteTask);
 
 module.exports = router;
