@@ -1,15 +1,15 @@
-const {obtenerTasks, createTasks} = require('../controllers/tasks.controllers');
+const {obtenerTasks, createTasks, editTask} = require('../controllers/tasks.controllers');
 const router = require('express').Router();
 
-// Indice
+// Todas las tareas
 router.get('/tasks', obtenerTasks);
-// Crear
+// Mostrar por id las tareas
+router.get('/tasks/:id', )
+// Crear una nueva tarea
 router.post('/tasks', createTasks);
-// Mostrar
-router.get('tasks/:id', );
-// Actualizar
-router.put('tasks/:id', );
-// Eliminar
+// Actualizar una tarea por id
+router.put('/tasks/:id', editTask);
+// Eliminar una tarea por id
 router.delete('tasks/:id',);
 
 module.exports = router;
