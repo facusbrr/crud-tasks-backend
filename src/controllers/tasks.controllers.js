@@ -8,12 +8,15 @@ ctrl.obtenerTasks = async(req, res) =>{
     connection.end();
     return res.json(results);
 }
-// Crear
+// Crear una nueva tarea
+// Tienen controles como max caracteres 255 y que no puede estar vacío
 ctrl.createTasks = async (req, res) => {
     const { title, description, isComplete } = req.body;
     if (!title.trim() || !description.trim()) {
-        return res.status(400).json({ message: 'Hay datos vacíos' });
-    } else if(isComplete !== 0 && isComplete !== 1){
+        return res.status(400).json({ message: 'Hay datos que estan vacíos' });
+    }else if (title.length > 255) {
+        return res.status(400).json({ message: 'El título solo debe tener 255 caracteres.' });
+    }else if(isComplete !== 0 && isComplete !== 1){
         return res.status(400).json({ message: 'isComplete Debe ser 0 o 1'})
     } else {
         const connection = await connectDB();
