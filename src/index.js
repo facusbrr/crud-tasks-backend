@@ -9,4 +9,6 @@ app.use(express.json());
 //ROUTES
 app.use(require('./routes/tasks.routes'));
 
-app.listen(PORT, () => console.log(`Server funcionando en el puerto: http://localhost:${PORT}`))
+app.listen(PORT, () =>
+  console.log(`Server funcionando en el puerto: http://localhost:${PORT}`)
+);
