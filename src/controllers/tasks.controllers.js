@@ -1,8 +1,7 @@
-const { connectDB } = require('../databases/task_db');
-const ctrl = {};
+import { connectDB } from '../databases/task_db.js';
 
 // Obtener todas las tareas
-ctrl.obtenerTasks = async (req, res) => {
+export const obtenerTasks = async (req, res) => {
   try {
     const connection = await connectDB();
     const [results] = await connection.query('SELECT * FROM tasks');
@@ -14,7 +13,7 @@ ctrl.obtenerTasks = async (req, res) => {
   }
 };
 // Obtener una tarea mediante su id
-ctrl.obtenerTask = async (req, res) => {
+export const obtenerTask = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     if (!id) {
@@ -36,7 +35,7 @@ ctrl.obtenerTask = async (req, res) => {
   }
 };
 // Crear una nueva tarea
-ctrl.createTasks = async (req, res) => {
+export const createTasks = async (req, res) => {
   try {
     const { title, description, isComplete } = req.body;
     if (!title.trim() || !description.trim())
@@ -63,7 +62,7 @@ ctrl.createTasks = async (req, res) => {
   }
 };
 // Editar tareas por id
-ctrl.editTask = async (req, res) => {
+export const editTask = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const { title, description, isComplete } = req.body;
@@ -92,7 +91,7 @@ ctrl.editTask = async (req, res) => {
   }
 };
 // Eliminar tareas
-ctrl.deleteTask = async (req, res) => {
+export const deleteTask = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     if (!id)
@@ -113,4 +112,3 @@ ctrl.deleteTask = async (req, res) => {
     return res.status(500).json({ message: 'Error al eliminar la tarea' });
   }
 };
-module.exports = ctrl;
