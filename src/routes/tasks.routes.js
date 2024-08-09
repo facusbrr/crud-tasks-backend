@@ -1,21 +1,22 @@
-const {
+import { Router } from 'express';
+import {
   obtenerTasks,
+  obtenerTask,
   createTasks,
   editTask,
-  obtenerTask,
   deleteTask,
-} = require('../controllers/tasks.controllers');
-const router = require('express').Router();
+} from '../controllers/tasks.controllers.js';
+const taskRouter = Router();
 
 // Todas las tareas
-router.get('/tasks', obtenerTasks);
+taskRouter.get('/', obtenerTasks);
 // Mostrar por id las tareas
-router.get('/tasks/:id', obtenerTask);
+taskRouter.get('/:id', obtenerTask);
 // Crear una nueva tarea
-router.post('/tasks', createTasks);
+taskRouter.post('/', createTasks);
 // Actualizar una tarea por id
-router.put('/tasks/:id', editTask);
+taskRouter.put('/:id', editTask);
 // Eliminar una tarea por id
-router.delete('/tasks/:id', deleteTask);
+taskRouter.delete('/:id', deleteTask);
 
-module.exports = router;
+export { taskRouter };

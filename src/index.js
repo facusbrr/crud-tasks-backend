@@ -1,4 +1,5 @@
-const express = require('express');
+import express from 'express';
+import { taskRouter } from './routes/tasks.routes.js';
 
 const app = express();
 const PORT = 3000;
@@ -7,7 +8,7 @@ const PORT = 3000;
 app.use(express.json());
 
 //ROUTES
-app.use(require('./routes/tasks.routes'));
+app.use('/tasks', taskRouter);
 
 app.listen(PORT, () =>
   console.log(`Server funcionando en el puerto: http://localhost:${PORT}`)
