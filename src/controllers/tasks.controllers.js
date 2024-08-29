@@ -1,9 +1,9 @@
-import { connectDB } from '../databases/task_db.js';
+import connectionDB from '../databases/task_db.js';
 
 // Obtener todas las tareas
 export const obtenerTasks = async (req, res) => {
   try {
-    const connection = await connectDB();
+    const connection = await connectionDB();
     const [results] = await connection.query('SELECT * FROM tasks');
     connection.end();
     return res.status(200).json(results);
@@ -20,7 +20,7 @@ export const obtenerTask = async (req, res) => {
     if (!id) {
       return res.status(400).send({ message: 'El id tiene que ser un numero' });
     }
-    const connection = await connectDB();
+    const connection = await connectionDB();
     const [results] = await connection.query(
       'SELECT * FROM tasks WHERE id = ?',
       [id]
@@ -42,7 +42,7 @@ export const obtenerTask = async (req, res) => {
 export const createTasks = async (req, res) => {
   try {
     const { title, description, isComplete } = req.body;
-    const connection = await connectDB();
+    const connection = await connectionDB();
     await connection.query(
       'INSERT INTO TASKS(title, description, isComplete) VALUES (?,?,?)',
       [title, description, isComplete]
@@ -60,7 +60,7 @@ export const editTask = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const { title, description, isComplete } = req.body;
-    const connection = await connectDB();
+    const connection = await connectionDB();
     await connection.query(
       'UPDATE tasks SET title = ?, description = ?, isComplete = ? WHERE id = ?',
       [title, description, isComplete, id]
@@ -77,7 +77,7 @@ export const editTask = async (req, res) => {
 export const deleteTask = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    const connection = await connectDB();
+    const connection = await connectionDB();
     const [results] = await connection.query(
       'SELECT * FROM tasks WHERE id = ?',
       [id]
