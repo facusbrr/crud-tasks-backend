@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-
+import dotenv from 'dotenv';
+dotenv.config();
 export const configMiddleware = (app) => {
   const corsOptions = {
     origin: process.env.CORS_ORIGIN,
